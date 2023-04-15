@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Mini projeto React com ASP.NET Core
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
