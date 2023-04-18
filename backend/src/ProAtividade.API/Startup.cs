@@ -14,6 +14,7 @@ using Pomelo.EntityFrameworkCore.MySql;
 using Microsoft.OpenApi.Models;
 using ProAtividade.API.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace ProAtividade.API
 {
@@ -30,7 +31,13 @@ namespace ProAtividade.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(
+                    options => // Configuração para trazer as Strings dos enums ao invez dos números
+                    {
+                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    }
+                );
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<Contexto>(options =>
@@ -52,7 +59,7 @@ namespace ProAtividade.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProAtividade.API v1"));
             }
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

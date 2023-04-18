@@ -43,7 +43,7 @@ namespace ProAtividade.API.Controllers
             {
                 await _contexto.Atividades.AddAsync(atividadeModel);
                 await _contexto.SaveChangesAsync();
-                return Ok();
+                return Ok(atividadeModel);
             }
             throw new Exception("Parametro obrigatório faltante!");
         }
