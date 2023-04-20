@@ -102,7 +102,7 @@ namespace ProAtividade.API.Controllers
                 if (await _iAtividadeService.DeletarAtividade(atividade.Id))
                     return Ok(new { message = "Deletado" });
                 else
-                    BadRequest("Ocorreu um problema não específico ao tentar excluir a atividade!");
+                    return BadRequest("Ocorreu um problema não específico ao tentar excluir a atividade!");
             }
             catch (System.Exception error)
             {
