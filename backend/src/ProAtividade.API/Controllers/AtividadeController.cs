@@ -62,12 +62,12 @@ namespace ProAtividade.API.Controllers
                     await _iAtividadeService.AdicionarAtividade(atividadeModel);
                     return StatusCode(StatusCodes.Status201Created, atividadeModel);
                 }
-                return StatusCode(StatusCodes.Status404NotFound, "Parametro obrigatório faltante!");
+                return NoContent();
 
             }
             catch (System.Exception error)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar savar a atividade: {error.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar Criar atividade: {error.Message}");
             }
         }
 
@@ -76,7 +76,8 @@ namespace ProAtividade.API.Controllers
         {
             try
             {
-                if (await _iAtividadeService.PegarAtividadePorIdAsync(id) == null) return StatusCode(StatusCodes.Status403Forbidden, $"Você está tentando atualizar uma atividade que não existe!");
+                if (await _iAtividadeService.PegarAtividadePorIdAsync(id) == null) return StatusCode(StatusCodes.Status409Conflict, $"Você está tentando atualizar uma atividade que não existe!");
+
                 if (atividadeModel.Id != id) return StatusCode(StatusCodes.Status403Forbidden, $"Você está tentando atualizar a atividade errada!");
 
                 await _iAtividadeService.AtualizarAtividade(atividadeModel);
@@ -85,7 +86,7 @@ namespace ProAtividade.API.Controllers
             }
             catch (System.Exception error)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar savar a atividade: {error.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar a atividade: {error.Message}");
             }
         }
 
@@ -95,14 +96,17 @@ namespace ProAtividade.API.Controllers
             try
             {
                 Atividade atividade = await _iAtividadeService.PegarAtividadePorIdAsync(id);
-                if (atividade == null) return StatusCode(StatusCodes.Status403Forbidden, $"Você está tentando exluir uma atividade que existe!");
 
-                await _iAtividadeService.DeletarAtividade(atividade.Id);
-                return Ok(atividade);
+                if (atividade == null) return StatusCode(StatusCodes.Status409Conflict, $"Você está tentando exluir uma atividade que existe!");
+
+                if (await _iAtividadeService.DeletarAtividade(atividade.Id))
+                    return Ok(new { message = "Deletado" });
+                else
+                    BadRequest("Ocorreu um problema não específico ao tentar excluir a atividade!");
             }
             catch (System.Exception error)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar savar a atividade: {error.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar deletar a atividade: {error.Message}");
             }
         }
     }
