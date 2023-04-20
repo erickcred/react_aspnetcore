@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import * as B from 'react-bootstrap'
 import './App.css'
-import AtividadeForm from './components/AtividadeForm'
-import AtividadeLista from './components/AtividadeLista'
+import AtividadeForm from './pages/atividades/AtividadeForm'
+import AtividadeLista from './pages/atividades/AtividadeLista'
 import api from './api/atividade'
+import TitlePage from './components/TitlePage'
 
 function App() {
   const [atividades, setAtividades] = useState([])
@@ -49,14 +50,15 @@ function App() {
   }
 
   const atualizarAtividade = async (atividade) => {
+    toggleAtividadeModal()
     const response = await api.put(`atividade/${atividade.id}`, atividade)
-    if (response) {
-      setAtividades(
-        atividades.map((item) => (item.id === atividade.id ? atividade : item))
-      )
-      setAtividade({ id: 0 })
-      toggleAtividadeModal()
-    }
+    const { id } = response.data
+    // if (response) {
+    setAtividades(
+      atividades.map((item) => (item.id === id ? response.data : item))
+    )
+    setAtividade({ id: 0 })
+    // }
   }
 
   function cancelarAtividade() {
@@ -71,70 +73,74 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <div className="d-flex justify-content-between align-items-center sticky-top bg-white mt-2 mb-3 pt-2 pb-3 border-bottom border-1">
-        <h1 className="p-0 m-0">Atividades</h1>
-        <B.Button variant="outline-secondary" onClick={toggleAtividadeModal}>
-          <i className="fas fa-plus"></i>
-        </B.Button>
+    <>
+      <div className="container">
+        <TitlePage
+          title={`Atividade ${atividade.id !== 0 ? atividade.id : ''}`}
+          toggleAtividadeModal={toggleAtividadeModal}
+        >
+          <B.Button variant="outline-secondary" onClick={toggleAtividadeModal}>
+            <i className="fas fa-plus"></i>
+          </B.Button>
+        </TitlePage>
+
+        <B.Modal show={showAtividadeModal} onHide={toggleAtividadeModal}>
+          <B.Modal.Header closeButton>
+            <B.Modal.Title>
+              <h5 className="p-0 m-0">
+                {atividade.id !== 0 ? `Editando: ${atividade.id}` : 'Cadastrar'}
+              </h5>
+            </B.Modal.Title>
+          </B.Modal.Header>
+
+          <B.Modal.Body>
+            <AtividadeForm
+              addAtividade={addAtividade}
+              cancelarAtividade={cancelarAtividade}
+              atualizarAtividade={atualizarAtividade}
+              atividadeSelecionada={atividade}
+              atividades={atividades}
+            />
+          </B.Modal.Body>
+        </B.Modal>
+
+        <B.Modal show={showModalDeletar} onHide={toggleModalDeletar}>
+          <B.Modal.Header closeButton>
+            <B.Modal.Title>
+              <h5 className="p-0 m-0">Deseja realmente excluir a Atividade</h5>
+            </B.Modal.Title>
+          </B.Modal.Header>
+
+          <B.Modal.Body>
+            <p>
+              <span>Id: {atividade.id}</span> <br />
+              <span>Título: {atividade.titulo}</span>
+            </p>
+          </B.Modal.Body>
+
+          <B.Modal.Footer>
+            <B.Button
+              variant="outline-success"
+              className="me-2"
+              onClick={() => deletarArtividade(atividade.id)}
+            >
+              <i className="fas fa-check me-2"></i>
+              Sim
+            </B.Button>
+            <B.Button variant="danger" onClick={() => toggleModalDeletar(0)}>
+              <i className="fas fa-times me-2"></i>
+              Cancelar
+            </B.Button>
+          </B.Modal.Footer>
+        </B.Modal>
+
+        <AtividadeLista
+          atividades={atividades}
+          editarAtividade={editarAtividade}
+          toggleModalDeletar={toggleModalDeletar}
+        />
       </div>
-
-      <B.Modal show={showAtividadeModal} onHide={toggleAtividadeModal}>
-        <B.Modal.Header closeButton>
-          <B.Modal.Title>
-            <h5 className="p-0 m-0">
-              {atividade.id !== 0 ? `Editando: ${atividade.id}` : 'Cadastrar'}
-            </h5>
-          </B.Modal.Title>
-        </B.Modal.Header>
-
-        <B.Modal.Body>
-          <AtividadeForm
-            addAtividade={addAtividade}
-            cancelarAtividade={cancelarAtividade}
-            atualizarAtividade={atualizarAtividade}
-            atividadeSelecionada={atividade}
-            atividades={atividades}
-          />
-        </B.Modal.Body>
-      </B.Modal>
-
-      <B.Modal show={showModalDeletar} onHide={toggleModalDeletar}>
-        <B.Modal.Header closeButton>
-          <B.Modal.Title>
-            <h5 className="p-0 m-0">Deseja realmente excluir a Atividade</h5>
-          </B.Modal.Title>
-        </B.Modal.Header>
-
-        <B.Modal.Body>
-          <p>
-            <span>Id: {atividade.id}</span> <br />
-            <span>Título: {atividade.titulo}</span>
-          </p>
-        </B.Modal.Body>
-
-        <B.Modal.Footer>
-          <B.Button
-            variant="outline-success"
-            className="me-2"
-            onClick={() => deletarArtividade(atividade.id)}
-          >
-            <i className="fas fa-check me-2"></i>
-            Sim
-          </B.Button>
-          <B.Button variant="danger" onClick={() => toggleModalDeletar(0)}>
-            <i className="fas fa-times me-2"></i>
-            Cancelar
-          </B.Button>
-        </B.Modal.Footer>
-      </B.Modal>
-
-      <AtividadeLista
-        atividades={atividades}
-        editarAtividade={editarAtividade}
-        toggleModalDeletar={toggleModalDeletar}
-      />
-    </div>
+    </>
   )
 }
 

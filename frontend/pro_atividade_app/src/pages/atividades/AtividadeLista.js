@@ -1,4 +1,4 @@
-import Atividade from '../Atividade'
+import Atividade from './Atividade'
 
 const AtividadeLista = (props) => {
   return (
