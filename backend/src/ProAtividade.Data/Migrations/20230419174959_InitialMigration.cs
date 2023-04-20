@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ProAtividade.API.Migrations
+namespace ProAtividade.Data.Migrations
 {
     public partial class InitialMigration : Migration
     {
@@ -18,9 +19,11 @@ namespace ProAtividade.API.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Titulo = table.Column<string>(type: "VARCHAR(150)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Prioridade = table.Column<int>(type: "INT(10)", nullable: false),
-                    Descricao = table.Column<string>(type: "VARCHAR(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Prioridade = table.Column<int>(type: "int", nullable: false),
+                    Descricao = table.Column<string>(type: "TEXT", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DataCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataConclusao = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {

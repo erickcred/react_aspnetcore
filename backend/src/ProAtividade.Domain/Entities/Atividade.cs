@@ -1,7 +1,8 @@
+using System;
 using System.ComponentModel.DataAnnotations;
-using ProAtividade.API.Enums;
+using ProAtividade.Domain.Enums;
 
-namespace ProAtividade.API.Models
+namespace ProAtividade.Domain.Entities
 {
     public class Atividade
     {
@@ -17,16 +18,24 @@ namespace ProAtividade.API.Models
         [Required(ErrorMessage = "Campo Descricao é obrigatório!")]
         public string Descricao { get; set; }
 
-        public Atividade()
-        {
-        }
+        public DateTime DataCriacao { get; set; }
+        public DateTime DataConclusao { get; set; }
 
-        public Atividade(int id, string titulo, EPrioridade prioridade, string descricao)
+        public Atividade() => DataCriacao = DateTime.Now;
+
+        public Atividade(int id, string titulo, string descricao) : this()
         {
             this.Id = id;
             this.Titulo = titulo;
-            this.Prioridade = prioridade;
             this.Descricao = descricao;
+        }
+
+        public void Concluir()
+        {
+            if (this.DataConclusao != null)
+                DataConclusao = DateTime.Now;
+            else
+                throw new Exception($"Atividade já Concluída em : {DataConclusao.ToString("dd/MM/yyyy hh:mm")}");
         }
 
     }

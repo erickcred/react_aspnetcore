@@ -11,7 +11,7 @@ const AtividadeLista = (props) => {
             prioridade={ativ.prioridade}
             titulo={ativ.titulo}
             descricao={ativ.descricao}
-            deletarArtividade={props.deletarArtividade}
+            toggleModalDeletar={props.toggleModalDeletar}
             editarAtividade={props.editarAtividade}
           />
         ))}

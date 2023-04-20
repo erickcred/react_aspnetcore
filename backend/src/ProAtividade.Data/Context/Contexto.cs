@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using ProAtividade.API.Models;
-using ProAtividade.API.Data.Mappings;
+using ProAtividade.Data.Mappings;
+using ProAtividade.Domain.Entities;
 
-namespace ProAtividade.API.Data
+namespace ProAtividade.Data.Context
 {
     public class Contexto : DbContext
     {

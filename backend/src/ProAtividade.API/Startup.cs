@@ -12,9 +12,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql;
 using Microsoft.OpenApi.Models;
-using ProAtividade.API.Data;
+using ProAtividade.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using ProAtividade.Domain.Interfaces;
+using ProAtividade.Data.Repositories;
+using ProAtividade.Domain.Interfaces.Services;
+using ProAtividade.Domain.Services;
+using ProAtividade.Domain.Interfaces.Repositories;
 
 namespace ProAtividade.API
 {
@@ -39,6 +44,10 @@ namespace ProAtividade.API
                     }
                 );
 
+            services.AddScoped<IAtividadeRepository, AtividadeRepository>();
+            services.AddScoped<IGeralRepository, GeralRepository>();
+            services.AddScoped<IAtividadeService, AtividadeService>();
+
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<Contexto>(options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
@@ -48,6 +57,8 @@ namespace ProAtividade.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProAtividade.API", Version = "v1" });
             });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +76,10 @@ namespace ProAtividade.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(option => option.AllowAnyHeader()
+                                    .AllowAnyMethod()
+                                    .AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

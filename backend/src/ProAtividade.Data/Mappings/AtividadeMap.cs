@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProAtividade.API.Enums;
-using ProAtividade.API.Models;
+using ProAtividade.Domain.Enums;
+using ProAtividade.Domain.Entities;
 
-namespace ProAtividade.API.Data.Mappings
+namespace ProAtividade.Data.Mappings
 {
     partial class AtividadeMap : IEntityTypeConfiguration<Atividade>
     {

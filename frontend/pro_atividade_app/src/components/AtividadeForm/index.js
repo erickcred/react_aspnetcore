@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 const atividadeInicial = {
   id: 0,
   titulo: '',
-  prioridade: 0,
+  prioridade: '',
   descricao: ''
 }
 
@@ -49,7 +49,6 @@ const AtividadeForm = (props) => {
 
   return (
     <>
-      <h1>Atividades {atividade.id !== 0 ? atividade.id : ''}</h1>
       <form onSubmit={handleSubmit}>
         <div className="row g-3">
           <div className="col-md-6 col-sm-12" hidden>
@@ -90,10 +89,10 @@ const AtividadeForm = (props) => {
               value={atividade.prioridade}
               onChange={inputTextHandler}
             >
-              <option defaultValue="0">Selecionar...</option>
-              <option value="1">Baixa</option>
-              <option value="2">Normal</option>
-              <option value="3">Alta</option>
+              <option value="Nao_Definido">Selecionar...</option>
+              <option value="Baixa">Baixa</option>
+              <option value="Normal">Normal</option>
+              <option value="Alta">Alta</option>
             </select>
           </div>
 
