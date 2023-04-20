@@ -23,7 +23,7 @@ namespace ProAtividade.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataConclusao")
+                    b.Property<DateTime?>("DataConclusao")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DataCriacao")

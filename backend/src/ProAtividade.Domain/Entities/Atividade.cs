@@ -19,9 +19,13 @@ namespace ProAtividade.Domain.Entities
         public string Descricao { get; set; }
 
         public DateTime DataCriacao { get; set; }
-        public DateTime DataConclusao { get; set; }
+        public DateTime? DataConclusao { get; set; }
 
-        public Atividade() => DataCriacao = DateTime.Now;
+        public Atividade()
+        {
+            this.DataCriacao = DateTime.Now;
+            this.DataConclusao = null;
+        }
 
         public Atividade(int id, string titulo, string descricao) : this()
         {
@@ -33,9 +37,9 @@ namespace ProAtividade.Domain.Entities
         public void Concluir()
         {
             if (this.DataConclusao != null)
-                DataConclusao = DateTime.Now;
+                this.DataConclusao = DateTime.Now;
             else
-                throw new Exception($"Atividade já Concluída em : {DataConclusao.ToString("dd/MM/yyyy hh:mm")}");
+                throw new Exception($"Atividade já Concluída em : {this.DataConclusao?.ToString("dd/MM/yyyy hh:mm")}");
         }
 
     }
