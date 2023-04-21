@@ -1,11 +1,11 @@
-import Atividade from './Atividade'
+import AtividadeItem from './AtividadeItem'
 
 const AtividadeLista = (props) => {
   return (
     <div className="mt-3 container">
       <div className="row gap-4 justify-content-md-evelyn justify-content-sm-center">
         {props.atividades.map((ativ) => (
-          <Atividade
+          <AtividadeItem
             key={ativ.id}
             id={ativ.id}
             prioridade={ativ.prioridade}

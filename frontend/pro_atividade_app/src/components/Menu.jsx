@@ -3,8 +3,8 @@ import * as B from 'react-bootstrap'
 const Menu = () => {
   return (
     <B.Navbar
-      bg="dark"
-      variant="dark"
+      // bg="dark"
+      // variant="dark"
       expand="lg"
       className="sticky-top bg-white"
     >
