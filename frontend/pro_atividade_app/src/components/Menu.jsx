@@ -1,20 +1,27 @@
 import * as B from 'react-bootstrap'
+import { NavLink } from 'react-router-dom'
 
 const Menu = () => {
   return (
     <B.Navbar
-      // bg="dark"
-      // variant="dark"
+      bg="primary"
+      variant="dark"
       expand="lg"
-      className="sticky-top bg-white"
+      className="navbar-dark sticky-top"
     >
       <B.Container>
-        <B.Navbar.Brand href="#">Atividades</B.Navbar.Brand>
+        <B.Navbar.Brand as={NavLink} to="/" className="navbar-brand">
+          Atividades
+        </B.Navbar.Brand>
         <B.Navbar.Toggle aria-controls="basic-nav-bar-nav" />
         <B.Navbar.Collapse id="basic-navbar-nav">
           <B.Nav className="me-auto">
-            <B.Nav.Link href="#">Clientes</B.Nav.Link>
-            <B.Nav.Link href="#">Atividades</B.Nav.Link>
+            <B.Nav.Link as={NavLink} className="nav-link" to="/cliente">
+              Clientes
+            </B.Nav.Link>
+            <B.Nav.Link as={NavLink} className="nav-link" to="/atividade">
+              Atividades
+            </B.Nav.Link>
           </B.Nav>
           <B.Nav>
             <B.NavDropdown align="end" title="Erick" id="basic-nav-dropdown">

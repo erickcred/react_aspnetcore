@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import * as B from 'react-bootstrap'
+
 import AtividadeForm from './AtividadeForm'
 import AtividadeLista from './AtividadeLista'
 import api from '../../api/atividade'
