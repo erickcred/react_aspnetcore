@@ -6,15 +6,15 @@ import TitlePage from '../../components/TitlePage'
 
 const ClienteForm = () => {
   const navigate = useNavigate()
-  const voltar = () => {
-    navigate('/cliente')
-  }
 
   return (
     <div className="container">
       <TitlePage title="Cliente From">
-        <B.Button variant="outline-secondary" onClick={voltar}>
-          <i className="fas fa-arrow-left me-2"></i>
+        <B.Button
+          variant="outline-secondary"
+          onClick={() => navigate('/cliente')}
+        >
+          <i className="fa-solid fa-arrow-left me-2"></i>
           Voltar
         </B.Button>
       </TitlePage>

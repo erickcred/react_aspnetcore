@@ -12,8 +12,7 @@ function App() {
       <Route path="/" element={<DashBoard />} />
       <Route path="/atividade" element={<Atividade />} />
       <Route path="/cliente" element={<Cliente />} />
-      <Route path="/cliente/detalhe/" element={<ClienteForm />} />
-      <Route path="/cliente/detalhe/:id" element={<ClienteForm />} />
+      <Route path="/cliente/detalhe/:id?" element={<ClienteForm />} />
     </Routes>
   )
 }
