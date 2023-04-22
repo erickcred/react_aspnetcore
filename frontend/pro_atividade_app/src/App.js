@@ -5,6 +5,7 @@ import DashBoard from './pages/dashboard/Dashboard'
 import Atividade from './pages/atividades/Atividade'
 import Cliente from './pages/clientes/Cliente'
 import ClienteForm from './pages/clientes/ClienteForm'
+import PageNotFound from './pages/PageNotFound'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/atividade" element={<Atividade />} />
       <Route path="/cliente" element={<Cliente />} />
       <Route path="/cliente/detalhe/:id?" element={<ClienteForm />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }

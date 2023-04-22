@@ -19,7 +19,7 @@ const ClienteForm = () => {
         </B.Button>
       </TitlePage>
 
-      <div>formulário aqui</div>
+      <div className="mt-3">forms aqui</div>
     </div>
   )
 }
